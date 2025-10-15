@@ -13,12 +13,10 @@ public class Shapes extends JPanel {
         setLayout(null);
     }
 
-    // Getter for shapes
     public List<ShapeObject> getShapes() {
         return shapes;
     }
 
-    // Add a circle with optional text
     public ShapeObject addCircle(int x, int y, int radius, Color color, Color fill, String text) {
         ShapeObject circle = new ShapeObject(
                 ShapeObject.Type.CIRCLE, x, y, radius, 0, 0, 0, 0, color, fill, text);
@@ -27,7 +25,6 @@ public class Shapes extends JPanel {
         return circle;
     }
 
-    // Add a rounded rectangle
     public ShapeObject addRoundedRect(int x, int y, int width, int height, int arcWidth, int arcHeight, Color color, Color fill) {
         ShapeObject rect = new ShapeObject(
                 ShapeObject.Type.ROUNDED_RECT, x, y, 0, width, height, arcWidth, arcHeight, color, fill, null);
@@ -36,7 +33,6 @@ public class Shapes extends JPanel {
         return rect;
     }
 
-    // Add a line
     public ShapeObject addLine(int x1, int y1, int x2, int y2, Color color) {
         ShapeObject line = new ShapeObject(
                 ShapeObject.Type.LINE, 0, 0, 0, x1, y1, x2, y2, color, null, null);
@@ -104,19 +100,18 @@ public class Shapes extends JPanel {
         public void draw(Graphics2D g2) {
             switch (type) {
                 case CIRCLE:
-                    // Fill first
                     if (fill != null) {
                         g2.setColor(fill);
                         g2.fillOval(x - radius, y - radius, radius * 2, radius * 2);
                     }
-                    // Outline
+                    
                     if (color != null) {
                         g2.setColor(color);
                         g2.drawOval(x - radius, y - radius, radius * 2, radius * 2);
                     }
-                    // Text
+                    
                     if (text != null) {
-                        g2.setFont(new Font("SansSerif", Font.BOLD, 12)); // fixed bold font
+                        g2.setFont(new Font("SansSerif", Font.BOLD, 12));
                         FontMetrics fm = g2.getFontMetrics();
                         int textWidth = fm.stringWidth(text);
                         int textHeight = fm.getAscent() + fm.getDescent();
@@ -148,3 +143,4 @@ public class Shapes extends JPanel {
         }
     }
 }
+

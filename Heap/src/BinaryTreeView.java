@@ -11,8 +11,8 @@ public class BinaryTreeView extends JPanel {
     private Shapes.ShapeObject[] circles;
     private Shapes.ShapeObject[] lines;
 
-    private int highlight1 = -1; // index of first highlighted node
-    private int highlight2 = -1; // index of second highlighted node
+    private int highlight1 = -1;
+    private int highlight2 = -1;
 
     public BinaryTreeView() {
         setLayout(null);
@@ -36,7 +36,6 @@ public class BinaryTreeView extends JPanel {
         drawTree();
     }
 
-    // Overloaded: update tree with highlighted nodes
     public void updateTree(int[] values, int highlight1, int highlight2) {
         this.values = values;
         this.highlight1 = highlight1;
@@ -54,15 +53,13 @@ public class BinaryTreeView extends JPanel {
         lines = new Shapes.ShapeObject[lineCount];
         circles = new Shapes.ShapeObject[values.length];
 
-        // Lines first
         for (int i = 0; i < lineCount; i++) {
             lines[i] = shapesContainer.addLine(0, 0, 0, 0, Color.BLACK);
         }
 
-        // Circles after
         for (int i = 0; i < values.length; i++) {
             Color fillColor = (i == highlight1 || i == highlight2) ? Color.YELLOW : Color.WHITE;
-            Color outline = Color.BLACK; // outline same as fill
+            Color outline = Color.BLACK;
             circles[i] = shapesContainer.addCircle(0, 0, nodeRadius, outline, fillColor, String.valueOf(values[i]));
         }
 
@@ -92,7 +89,6 @@ public class BinaryTreeView extends JPanel {
             circles[i].setPosition(xPositions[i], yPositions[i]);
         }
 
-        // Lines (center to center)
         int lineIndex = 0;
         for (int i = 0; i < nodeCount; i++) {
             int parentX = xPositions[i];
@@ -111,7 +107,6 @@ public class BinaryTreeView extends JPanel {
         repaint();
     }
 
-    // Updates tree with swapping highlights and root highlight
     public void updateTreeWithHighlights(int[] values, int highlight1, int highlight2) {
         this.values = values;
 
@@ -119,31 +114,26 @@ public class BinaryTreeView extends JPanel {
         lines = new Shapes.ShapeObject[Math.max(0, values.length - 1)];
         circles = new Shapes.ShapeObject[values.length];
 
-        // Lines first
         for (int i = 0; i < lines.length; i++)
             lines[i] = shapesContainer.addLine(0, 0, 0, 0, Color.BLACK);
 
-        // Circles
         for (int i = 0; i < values.length; i++) {
-            // Only highlight swapping nodes
+
             Color outline = (i == highlight1 || i == highlight2) ? Color.YELLOW : Color.BLACK;
 
-            // Fill stays constant
             circles[i] = shapesContainer.addCircle(0, 0, 20, outline, Color.WHITE, String.valueOf(values[i]));
         }
 
         updatePositions();
     }
 
-    // Optional: clear highlights (reset outline)
     public void clearHighlights() {
         if (circles == null) return;
         for (Shapes.ShapeObject c : circles) {
-            c.setColor(Color.BLACK); // reset outline
+            c.setColor(Color.BLACK);
         }
         repaint();
     }
-
 
     @Override
     public void setBounds(int x, int y, int width, int height) {

@@ -25,12 +25,11 @@ public class GUI {
         layeredPane.setBounds(0, 0, frame.getWidth(), frame.getHeight());
         frame.add(layeredPane);
 
-        // --- View Panel ---
         JPanel view = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                // Draw rounded overlay
+                
                 Graphics2D g2 = (Graphics2D) g;
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setColor(new Color(0xE3E3E3));
@@ -41,12 +40,10 @@ public class GUI {
         view.setBounds(10, 10, frame.getWidth() - 20, frame.getHeight() - 20);
         layeredPane.add(view, Integer.valueOf(1));
 
-        // Binary tree visualization
         BinaryTreeView treeView = new BinaryTreeView();
         treeView.setBounds(0, 0, view.getWidth(), view.getHeight());
         view.add(treeView);
 
-        // --- Settings Panel ---
         JPanel settings = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -65,7 +62,6 @@ public class GUI {
                 frame.getHeight() / 6);
         layeredPane.add(settings, Integer.valueOf(2));
 
-        // --- Input Field & Buttons ---
         JTextField inputField = new JTextField();
         inputField.setPreferredSize(new Dimension(150, 30));
         inputField.setFont(new Font("Arial", Font.BOLD, 16));
@@ -86,17 +82,15 @@ public class GUI {
         settings.add(resetButton);
         settings.add(heapSelector);
 
-        // --- Step-by-step logic ---
-        timer = new Timer(500, null); // initially no action
+        timer = new Timer(500, null);
 
         timer.addActionListener(e -> {
             if (currentStepIndex < steps.size() * 2) {
-                // *2 because we add an extra clear step after each actual step
                 int stepIndex = currentStepIndex / 2;
                 boolean isClearStep = (currentStepIndex % 2 == 1);
 
                 if (isClearStep) {
-                    treeView.clearHighlights(); // remove highlights
+                    treeView.clearHighlights();
                 } else {
                     Heap.Step step = steps.get(stepIndex);
                     treeView.updateTreeWithHighlights(step.array, step.highlight1, step.highlight2);
@@ -107,8 +101,6 @@ public class GUI {
                 timer.stop();
             }
         });
-
-
 
         ActionListener generateSteps = e -> {
             String text = inputField.getText().trim();
@@ -137,7 +129,6 @@ public class GUI {
             timer.start();
         });
 
-
         pauseButton.addActionListener(e -> timer.stop());
 
         stepButton.addActionListener(e -> {
@@ -164,7 +155,6 @@ public class GUI {
             treeView.updateTree(new int[0]);
         });
 
-        // --- Dynamic Resizing ---
         frame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -186,3 +176,4 @@ public class GUI {
         });
     }
 }
+
